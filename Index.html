@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Cadastro para Batismo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        input[type="text"], input[type="number"], input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #25d366;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .container div {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Documentos e Dados para Realização de Batismo</h2>
+        <p>As informações aqui coletadas serão utilizadas apenas e expressamente para fins de arquivamento em Livro de Registro próprio da Paróquia União de Montenegro.</p>
+        <form id="cadastroForm">
+            <div>
+                <label for="dataBatismo" style="font-size: 18px;">Data em que deseja realizar o Batismo:</label>
+                <input type="date" id="dataBatismo" name="dataBatismo">
+            </div>
+            <div>
+                <label for="nomeBatizado" style="font-size: 18px;">Nome completo da pessoa (criança) que será batizada:</label>
+                <input type="text" id="nomeBatizado" name="nomeBatizado">
+            </div>
+            <div>
+                <label for="dataNascimentoBatizado" style="font-size: 18px;">Data de nascimento da pessoa que será batizada:</label>
+                <input type="date" id="dataNascimentoBatizado" name="dataNascimentoBatizado">
+            </div>
+            <div>
+                <label for="certidaoNascimento" style="font-size: 18px;">Anexar certidão de nascimento da criança a ser batizada (permitido múltiplos uploads):</label>
+                <input type="file" id="certidaoNascimento" name="certidaoNascimento" multiple>
+            </div>
+            <div>
+                <label for="dataNascimentoMae" style="font-size: 18px;">Data de nascimento da mãe:</label>
+                <input type="date" id="dataNascimentoMae" name="dataNascimentoMae">
+            </div>
+            <div>
+                <label for="comprovanteMae" style="font-size: 18px;">Comprovante de quitação da anuidade referente a 2022 ou autorização caso seja de outra igreja (permitido múltiplos uploads):</label>
+                <input type="file" id="comprovanteMae" name="comprovanteMae" multiple>
+            </div>
+            <div>
+                <label for="dataNascimentoPai" style="font-size: 18px;">Data de nascimento do pai:</label>
+                <input type="date" id="dataNascimentoPai" name="dataNascimentoPai">
+            </div>
+            <div>
+                <label for="comprovantePai" style="font-size: 18px;">Comprovante de quitação da anuidade referente a 2022 ou autorização caso seja de outra igreja (permitido múltiplos uploads):</label>
+                <input type="file" id="comprovantePai" name="comprovantePai" multiple>
+            </div>
+            <div>
+                <label for="enderecoPais" style="font-size: 18px;">Endereço completo de moradia dos pais:</label>
+                <input type="text" id="enderecoPais" name="enderecoPais">
+            </div>
+            <div>
+                <label for="nomePadrinhos" style="font-size: 18px;">Nome completo de padrinhos e madrinhas escolhidos:</label>
+                <input type="text" id="nomePadrinhos" name="nomePadrinhos">
+            </div>
+            <div>
+                <label for="infoPadrinhos" style="font-size: 18px;">Nome Completo dos padrinhos e Madrinhas, denominação cristã da qual faz parte e endereço de residência (Exemplo: João - Luterano - endereço de residência):</label>
+                <input type="text" id="infoPadrinhos" name="infoPadrinhos">
+            </div>
+            <div>
+                <label for="autorizacaoPais" style="font-size: 18px;">Anexar autorização para assumir a função de padrinho e madrinha de batismo (para padrinhos e madrinhas fora da Igreja Luterana - IECLB). (membro de outra igreja) (permitido múltiplos uploads):</label>
+                <input type="file" id="autorizacaoPais" name="autorizacaoPais" multiple>
+            </div>
+            <div>
+                <label for="comprovantePadrinhos" style="font-size: 18px;">Anexar comprovante de quitação de anuidade para padrinho e madrinha vinculado à IECLB ou alguma Comunidade da Paróquia União. (Comprovante pode ser solicitado junto ao cobrador ou tesouraria da comunidade) (permitido múltiplos uploads):</label>
+                <input type="file" id="comprovantePadrinhos" name="comprovantePadrinhos" multiple>
+            </div>
+        </form>
+        <button type="button" onclick="enviarDados()">Enviar</button>
+    </div>
+
+    <script>
+        function enviarDados() {
+            var formulario = document.getElementById("cadastroForm");
+            var mensagem = "Novo registro (ID: " + generateID() + "):\n";
+
+            for (var i = 0; i < formulario.elements.length; i++) {
+                if (formulario.elements[i].type !== "button") {
+                    mensagem += formulario.elements[i].labels[0].innerText + ": " + formulario.elements[i].value + "\n";
+                }
+            }
+
+            var numeroWhatsapp = "+5551997858249"; // Número de WhatsApp pré-definido
+
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                window.open("whatsapp://send?phone=" + encodeURIComponent(numeroWhatsapp) + "&text=" + encodeURIComponent(mensagem));
+            } else {
+                alert("Você está em um dispositivo que não suporta a abertura direta do WhatsApp. Por favor, use um smartphone.");
+            }
+
+            var emailDestino = "paroquiauniaomontenegro@gmail.com";
+            var assunto = "Novo Registro de Batismo";
+            var corpoEmail = mensagem;
+
+            window.location.href = "mailto:" + emailDestino + "?subject=" + encodeURIComponent(assunto) + "&body=" + encodeURIComponent(corpoEmail);
+        }
+
+        function generateID() {
+            return Math.floor(Math.random() * 10000);
+        }
+    </script>
+</body>
+</html>
